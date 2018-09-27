@@ -1,5 +1,5 @@
 """
-PRACTICE Test 2, practice_problem 3.
+PRACTICE Exam 2, practice_problem 1.
 
 Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
          their colleagues and PUT_YOUR_NAME_HERE.
@@ -32,11 +32,11 @@ import rosegraphics as rg
 
 def main():
     """ Calls the   TEST   functions in this module. """
-    run_test_practice_problem3a()
-    run_test_practice_problem3b()
-    run_test_practice_problem3c()
-    run_test_practice_problem3d()
-    run_test_practice_problem3e()
+    run_test_practice_problem1a()
+    run_test_practice_problem1b()
+    run_test_practice_problem1c()
+    run_test_practice_problem1d()
+    run_test_practice_problem1e()
 
 
 def is_prime(n):
@@ -78,8 +78,8 @@ def is_prime(n):
 # ----------------------------------------------------------------------
 
 
-def run_test_practice_problem3a():
-    """ Tests the    practice_problem3a    function. """
+def run_test_practice_problem1a():
+    """ Tests the    practice_problem1a    function. """
     # ------------------------------------------------------------------
     # 6 tests.
     # They use the imported   simple_testing (st)   module.
@@ -88,32 +88,32 @@ def run_test_practice_problem3a():
     #   -- a list containing the argument(s) to send to the function,
     #   -- the correct returned value.
     # For example, the first test below will call
-    #   practice_problem3a((rg.Circle(rg.Point(5, 10), 20),
+    #   practice_problem1a((rg.Circle(rg.Point(5, 10), 20),
     #                       rg.Circle(rg.Point(2, 20), 20),
     #                       rg.Circle(rg.Point(7, 30), 10),
     #                       rg.Circle(rg.Point(10, 40), 20),
     #                       rg.Circle(rg.Point(2, 50), 10)))
     # and compare the returned value against 1400 (the correct answer).
     # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem3a,
+    tests = [st.SimpleTestCase(practice_problem1a,
                                [(rg.Circle(rg.Point(5, 10), 20),
                                  rg.Circle(rg.Point(2, 20), 20),
                                  rg.Circle(rg.Point(7, 30), 10),
                                  rg.Circle(rg.Point(10, 40), 20),
                                  rg.Circle(rg.Point(2, 50), 10))],
                                5 * 2 * 7 * 10 * 2),
-             st.SimpleTestCase(practice_problem3a,
+             st.SimpleTestCase(practice_problem1a,
                                [(rg.Circle(rg.Point(58, 10), 20),)],
                                58),
-             st.SimpleTestCase(practice_problem3a,
+             st.SimpleTestCase(practice_problem1a,
                                [(rg.Circle(rg.Point(84, 100), 200),
                                  rg.Circle(rg.Point(28, 200), 200),
                                  rg.Circle(rg.Point(10005, 300), 100))],
                                84 * 28 * 10005),
-             st.SimpleTestCase(practice_problem3a,
+             st.SimpleTestCase(practice_problem1a,
                                [()],
                                1),
-             st.SimpleTestCase(practice_problem3a,
+             st.SimpleTestCase(practice_problem1a,
                                [(rg.Circle(rg.Point(5, 10), 20),
                                  rg.Circle(rg.Point(0, 20), 20),
                                  rg.Circle(rg.Point(7, 30), 10),
@@ -126,17 +126,17 @@ def run_test_practice_problem3a():
     for k in range(1, 101):
         circles.append(rg.Circle(rg.Point(k, k + 20), 5 * k))
     answer = math.factorial(100)
-    tests.append(st.SimpleTestCase(practice_problem3a,
+    tests.append(st.SimpleTestCase(practice_problem1a,
                                    [circles],
                                    answer))
 
     # ------------------------------------------------------------------
     # Run the 6 tests in the   tests   list constructed above.
     # ------------------------------------------------------------------
-    st.SimpleTestCase.run_tests('practice_problem3a', tests)
+    st.SimpleTestCase.run_tests('practice_problem1a', tests)
 
 
-def practice_problem3a(circles):
+def practice_problem1a(circles):
     """
     What comes in:  A sequence of rg.Circles.
     What goes out:  Returns the product of the x-coordinates
@@ -165,8 +165,8 @@ def practice_problem3a(circles):
     ####################################################################
 
 
-def run_test_practice_problem3b():
-    """ Tests the    practice_problem3b    function. """
+def run_test_practice_problem1b():
+    """ Tests the    practice_problem1b    function. """
     # ------------------------------------------------------------------
     # 13 tests.  They use the imported   simple_testing (st)   module.
     # Each test is a SimpleTestCase with 3 arguments:
@@ -174,57 +174,57 @@ def run_test_practice_problem3b():
     #   -- a list containing the argument(s) to send to the function,
     #   -- the correct returned value.
     # For example, the first test below will call
-    #   practice_problem3b([12, 33, 18, 'hello', 9, 13, 3, 9])
+    #   practice_problem1b([12, 33, 18, 'hello', 9, 13, 3, 9])
     # and compare the returned value against True (the correct answer).
     # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem3b,
+    tests = [st.SimpleTestCase(practice_problem1b,
                                [[12, 33, 18, 'hello', 9, 13, 3, 9]],
                                True),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [[12, 12, 33, 'hello', 5, 33, 5, 9]],
                                False),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [(77, 112, 33, 'hello', 0, 43, 5, 77)],
                                True),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [[1, 1, 1, 1, 1, 1, 2]],
                                False),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [['aa', 'a']],
                                False),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                ['aaa'],
                                True),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [['aa', 'a', 'b', 'a', 'b', 'a']],
                                True),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [[9]],
                                False),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [(12, 33, 8, 'hello', 99, 'hello')],
                                True),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [['hello there', 'he', 'lo', 'hello']],
                                False),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [((8,), '8', (4 + 4, 4 + 4), [8, 8], 7, 8)],
                                False),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [[(8,), '8', [4 + 4, 4 + 4],
                                  (8, 8), 7, [8, 8]]],
                                True),
-             st.SimpleTestCase(practice_problem3b,
+             st.SimpleTestCase(practice_problem1b,
                                [[(8,), '8', [4 + 4, 4 + 4],
                                  [8, 8], 7, (8, 8)]],
                                False),
              ]
 
     # Run the 13 tests in the   tests   list constructed above.
-    st.SimpleTestCase.run_tests('practice_problem3b', tests)
+    st.SimpleTestCase.run_tests('practice_problem1b', tests)
 
 
-def practice_problem3b(sequence):
+def practice_problem1b(sequence):
     """
     What comes in: A non-empty sequence.
     What goes out: Returns True if the last item of the sequence
@@ -280,8 +280,8 @@ def practice_problem3b(sequence):
     ####################################################################
 
 
-def run_test_practice_problem3c():
-    """ Tests the    practice_problem3c    function. """
+def run_test_practice_problem1c():
+    """ Tests the    practice_problem1c    function. """
     # ------------------------------------------------------------------
     # 4 tests.  They use the imported   simple_testing (st)   module.
     # Each test is a SimpleTestCase with 3 arguments:
@@ -289,44 +289,44 @@ def run_test_practice_problem3c():
     #   -- a list containing the argument(s) to send to the function,
     #   -- the correct returned value.
     # For example, the first test below will call
-    #   practice_problem3c((9, 0, 8, 0, 0, 4, 4, 0))
+    #   practice_problem1c((9, 0, 8, 0, 0, 4, 4, 0))
     # and compare the returned value against [1, 3, 4, 7]
     # (the correct answer).
     # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem3c,
+    tests = [st.SimpleTestCase(practice_problem1c,
                                [(9, 0, 8, 0, 0, 4, 4, 0)],
                                [1, 3, 4, 7]),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [(9, 9, 9, 9, 0, 9, 9, 9)],
                                [4]),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [(4, 5, 4, 5, 4, 5, 4)],
                                []),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [[0, 0, 0]],
                                [0, 1, 2]),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [[0, 0]],
                                [0, 1]),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [[0, 77]],
                                [0]),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [[-40, 0]],
                                [1]),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [[-40, 67]],
                                []),
-             st.SimpleTestCase(practice_problem3c,
+             st.SimpleTestCase(practice_problem1c,
                                [(1, 0, 2, 0, 0, 0, 0, 6, 9, 0, 0, 12)],
                                [1, 3, 4, 5, 6, 9, 10]),
              ]
 
     # Run the tests in the   tests   list constructed above.
-    st.SimpleTestCase.run_tests('practice_problem3c', tests)
+    st.SimpleTestCase.run_tests('practice_problem1c', tests)
 
 
-def practice_problem3c(sequence):
+def practice_problem1c(sequence):
     """
     What comes in: A non-empty sequence of integers.
     What goes out: Returns a list of integers,
@@ -363,8 +363,8 @@ def practice_problem3c(sequence):
     ####################################################################
 
 
-def run_test_practice_problem3d():
-    """ Tests the    practice_problem3d    function. """
+def run_test_practice_problem1d():
+    """ Tests the    practice_problem1d    function. """
     # ------------------------------------------------------------------
     # 4 tests.  They use the imported   simple_testing (st)   module.
     # Each test is a SimpleTestCase with 3 arguments:
@@ -372,43 +372,43 @@ def run_test_practice_problem3d():
     #   -- a list containing the argument(s) to send to the function,
     #   -- the correct returned value.
     # For example, the first test below will call
-    #   practice_problem3d((9, 0, 8, 0, 0, 4, 4, 0))
+    #   practice_problem1d((9, 0, 8, 0, 0, 4, 4, 0))
     # and compare the returned value against 1 (the correct answer).
     # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem3d,
+    tests = [st.SimpleTestCase(practice_problem1d,
                                [(9, 0, 8, 0, 0, 4, 4, 0)],
                                1),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [(9, 9, 9, 9, 0, 9, 9, 9)],
                                4),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [(4, 5, 4, 5, 4, 5, 4)],
                                - 1),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [[0, 0, 0]],
                                0),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [[0, 0]],
                                0),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [[0, 77]],
                                0),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [[-40, 0]],
                                1),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [[-40, 67]],
                                - 1),
-             st.SimpleTestCase(practice_problem3d,
+             st.SimpleTestCase(practice_problem1d,
                                [(1, 0, 2, 0, 0, 0, 0, 6, 9, 0, 0, 12)],
                                1),
              ]
 
     # Run the tests in the   tests   list constructed above.
-    st.SimpleTestCase.run_tests('practice_problem3d', tests)
+    st.SimpleTestCase.run_tests('practice_problem1d', tests)
 
 
-def practice_problem3d(sequence):
+def practice_problem1d(sequence):
     """
     What comes in: A sequence of integers.
     What goes out: Returns the first (leftmost) place (index)
@@ -447,23 +447,23 @@ def practice_problem3d(sequence):
 
     ####################################################################
     # TODO: 6. Just ABOVE this TODO, you should have implemented
-    #     a solution for the   practice_problem3d   function.
+    #     a solution for the   practice_problem1d   function.
     #     Here, put ANOTHER solution, as follows:
     #
     #       -- Your FIRST solution (ABOVE this TODO)
     #            should be a solution that IGNORES
-    #              practice_problem3c (the previous problem).
+    #              practice_problem1c (the previous problem).
     #
     #       -- Your SECOND solution (BELOW this TODO)
     #            should be a solution that USES (calls)
-    #              practice_problem3c.
+    #              practice_problem1c.
     #
     #          This solution should *** HAVE NO LOOP (no FOR). ***
     ####################################################################
 
 
-def run_test_practice_problem3e():
-    """ Tests the    practice_problem3e    function. """
+def run_test_practice_problem1e():
+    """ Tests the    practice_problem1e    function. """
     # ------------------------------------------------------------------
     # 5 tests.  They use the imported   simple_testing (st)   module.
     # Each test is a SimpleTestCase with 3 arguments:
@@ -471,42 +471,42 @@ def run_test_practice_problem3e():
     #   -- a list containing the argument(s) to send to the function,
     #   -- the correct returned value.
     # For example, the first test below will call
-    #   practice_problem3e((12, 33, 18, 9, 13, 3, 9, 20, 19, 20))
+    #   practice_problem1e((12, 33, 18, 9, 13, 3, 9, 20, 19, 20))
     # and compare the returned value against 161 (the correct answer).
     # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem3e,
+    tests = [st.SimpleTestCase(practice_problem1e,
                                [(12, 33, 18, 9, 13, 3, 99, 20, 19, 20)], 161),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(3, 12, 10, 8, 8, 9, 8, 11)], 29),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(-9999999999, 8888888888)], -9999999999),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(8888888888, -9999999999)], 8888888888),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(-77, 20000, -33, 40000, -55, 60000, -11)], -176),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [()], 0),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [[]], 0),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [[8]], 8),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(-77, 8)], -77),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(-77, 8, 77)], 0),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(-77, 8, 78)], 1),
-             st.SimpleTestCase(practice_problem3e,
+             st.SimpleTestCase(practice_problem1e,
                                [(-77, 8, 78, 100)], 1),
              ]
 
     # ------------------------------------------------------------------
     # Run the 5 tests in the   tests   list constructed above.
     # ------------------------------------------------------------------
-    st.SimpleTestCase.run_tests('practice_problem3e', tests)
+    st.SimpleTestCase.run_tests('practice_problem1e', tests)
 
 
-def practice_problem3e(sequence):
+def practice_problem1e(sequence):
     """
     What comes in:
       A sequence of numbers.
