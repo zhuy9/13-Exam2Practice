@@ -1,7 +1,10 @@
 """
-PRACTICE Exam 2, practice_problem 1.
+PRACTICE Test 2, practice_problem 1.
 
-Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
+This problem provides practice at:
+  ***  IMPLEMENTING CLASSES.  ***
+
+Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
          their colleagues and PUT_YOUR_NAME_HERE.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
@@ -25,511 +28,980 @@ Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
 #    on it, in class or via Piazza.
 ########################################################################
 
-import simple_testing as st
-import math
-import rosegraphics as rg
+import time
+import sys
 
 
 def main():
     """ Calls the   TEST   functions in this module. """
-    run_test_practice_problem1a()
-    run_test_practice_problem1b()
-    run_test_practice_problem1c()
-    run_test_practice_problem1d()
-    run_test_practice_problem1e()
+
+    ####################################################################
+    # UN-comment tests as you work the problems.
+    ####################################################################
+
+#     run_test_init()
+#     run_test_append_string()
+#     run_test_double()
+#     run_test_shrink()
+#     run_test_double_then_shrink()
+#     run_test_reset()
+#     run_test_steal()
+#     run_test_get_history()
+#     run_test_combined_box()
 
 
-def is_prime(n):
+########################################################################
+# The   Box   class (and its methods) begins here.
+########################################################################
+
+class Box(object):
     """
-    What comes in:   An integer.
-    What goes out:  Returns True if the given integer is prime.
-                    Returns False if the given integer is NOT prime.
-    Side effects: None.
-    Examples:
-      This function returns True or False, depending on whether
-      the given integer is prime or not.  Since the smallest prime is 2,
-      this function returns False on all integers < 2.
-      It returns True on 2, 3, 5, 7, and other primes.
-    Note: The algorithm used here is simple and clear but slow.
-    Type hints:
-      :type n: int
+    A Box has:
+        -- CONTENTS, which is a string, and
+        -- VOLUME, which is a non-negative integer.
+    The length of the Box's CONTENTS can never exceed the Box's VOLUME.
     """
-    if n < 2:
-        return False
 
-    for k in range(2, int(math.sqrt(n) + 0.1) + 1):
-        if n % k == 0:
-            return False
+    def __init__(self, contents, volume):
+        """
+        What comes in:
+          -- self
+          -- A string that is the contents of the Box
+          -- An integer that is the volume (maximum capacity) of the Box
+        What goes out: Nothing (i.e., None).
+        Side effects:
+          -- Stores the Box's contents and volume
+             in the instance variables
+                 self.contents
+                 self.volume
+          -- EXCEPT if the length of the given contents
+               is bigger than the given volume,
+               then   self.contents is set to the empty string
+               (simulating a "rejection" of the given contents).
+          -- Also initializes other instance variables as needed
+              by other methods.
+        Examples:
+          b1 = Box('Peace', 8)
+          #   b1.contents is 'Peace'
+          #   b2.volume is 8
 
-    return True
-    # ------------------------------------------------------------------
-    # Students:
-    #   Do NOT touch the above  is_prime  function - it has no TODO.
-    #   Do NOT copy code from this function.
-    #
-    # Instead, ** CALL ** this function as needed in the problems below.
-    # ------------------------------------------------------------------
+          b2 = Box('Peace and Love', 8)
+          #   b2.contents is ''   [The contents were too big, hence rejected]
+          #   b2.volume is 8
 
+        Type hints:
+          :type contents: str
+          :type volume: int
+        """
+        # --------------------------------------------------------------
+        # TODO: 2. Implement and test this function.
+        #     See the testing code (below) for more examples.
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      3
+        #    TIME ESTIMATE:   5 minutes.
+        # --------------------------------------------------------------
 
-# ----------------------------------------------------------------------
-# Students: Some of the testing code below uses SimpleTestCase objects,
-#           from the imported   simple_testing (st)   module.
-#           See details in the  test  code below.
-# ----------------------------------------------------------------------
+    def append_string(self, additional_contents):
+        """
+        What comes in:
+          -- self
+          -- A string that is to be appended to this Box's contents
+        What goes out:
+          Returns a string that is whatever substring of the
+          additional_contents did not fit in this Box
+          (or the empty string if the entire additional_contents fit)
+        Side effects:
+          -- Sets this Box's contents to its current contents plus
+               (i.e., followed by) as much of the given
+               additional_contents as will fit in this Box
+        Examples:
+          b1 = Box('Hello', 20)
+          s = b1.append_string('Goodbye')
+          #   b1.contents is now 'HelloGoodbye'
+          #   b1.volume is still 20
+          #   s is ''  [since the entire additional_contents
+          #             fit in this Box]
 
+          b2 = Box('Hello', 8)
+          s = b2.append_string('Goodbye')
+          #   b2.contents is now 'HelloGoo'
+          #   b2.volume is still 8
+          #   s is 'dbye'   [this is the part of the additional_contents
+          #                  that did NOT fit in this Box]
 
-def run_test_practice_problem1a():
-    """ Tests the    practice_problem1a    function. """
-    # ------------------------------------------------------------------
-    # 6 tests.
-    # They use the imported   simple_testing (st)   module.
-    # Each test is a SimpleTestCase with 3 arguments:
-    #   -- the function to test,
-    #   -- a list containing the argument(s) to send to the function,
-    #   -- the correct returned value.
-    # For example, the first test below will call
-    #   practice_problem1a((rg.Circle(rg.Point(5, 10), 20),
-    #                       rg.Circle(rg.Point(2, 20), 20),
-    #                       rg.Circle(rg.Point(7, 30), 10),
-    #                       rg.Circle(rg.Point(10, 40), 20),
-    #                       rg.Circle(rg.Point(2, 50), 10)))
-    # and compare the returned value against 1400 (the correct answer).
-    # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem1a,
-                               [(rg.Circle(rg.Point(5, 10), 20),
-                                 rg.Circle(rg.Point(2, 20), 20),
-                                 rg.Circle(rg.Point(7, 30), 10),
-                                 rg.Circle(rg.Point(10, 40), 20),
-                                 rg.Circle(rg.Point(2, 50), 10))],
-                               5 * 2 * 7 * 10 * 2),
-             st.SimpleTestCase(practice_problem1a,
-                               [(rg.Circle(rg.Point(58, 10), 20),)],
-                               58),
-             st.SimpleTestCase(practice_problem1a,
-                               [(rg.Circle(rg.Point(84, 100), 200),
-                                 rg.Circle(rg.Point(28, 200), 200),
-                                 rg.Circle(rg.Point(10005, 300), 100))],
-                               84 * 28 * 10005),
-             st.SimpleTestCase(practice_problem1a,
-                               [()],
-                               1),
-             st.SimpleTestCase(practice_problem1a,
-                               [(rg.Circle(rg.Point(5, 10), 20),
-                                 rg.Circle(rg.Point(0, 20), 20),
-                                 rg.Circle(rg.Point(7, 30), 10),
-                                 rg.Circle(rg.Point(10, 40), 20),
-                                 rg.Circle(rg.Point(2, 50), 10))],
-                               5 * 0 * 7 * 10 * 2),
-             ]
+        Type hints:
+          :type additional_contents: str
+        """
+        # --------------------------------------------------------------
+        # TODO: 3. Implement and test this function.
+        #     See the testing code (below) for more examples.
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      10
+        #    TIME ESTIMATE:   20 - 30 minutes.
+        #
+        #   **** IMPORTANT: ****
+        # 1. Write a solution to this problem in pseudo-code,
+        #    and THEN translate the pseudo-code to a solution.
+        #
+        # 2. If you do not have a correct solution after 10-15 minutes,
+        #    read the file   Read_this_ONLY_when_asked_Part_1.txt
+        #    and continue working on the problem.
+        #
+        # 3. If you still do not have a solution after another 5-10
+        #    minutes, then read the file
+        #       Read_this_ONLY_when_asked_Part_2.txt
+        #    and continue working on the problem.
+        # --------------------------------------------------------------
 
-    circles = []
-    for k in range(1, 101):
-        circles.append(rg.Circle(rg.Point(k, k + 20), 5 * k))
-    answer = math.factorial(100)
-    tests.append(st.SimpleTestCase(practice_problem1a,
-                                   [circles],
-                                   answer))
+    def double(self):
+        """
+        What comes in:
+          -- self
+        What goes out:
+          Returrns a string that is whatever substring of the
+          doubled contents did not fit in this Box
+          (or the empty string if the entire doubled contents fit)
+        Side effects:
+          -- Sets this Box's contents to what it was PLUS what it was,
+             but clipped if necessary so as not to exceed
+             this Box's volume.
+        Examples:
+          b1 = Box('Robot Fun', 20)
+          s = b1.double()
+          #   b1.contents is now 'Robot FunRobot Fun'
+          #   b1.volume is still 20
+          #   s is ''  [since the entire doubled contents fit]
 
-    # ------------------------------------------------------------------
-    # Run the 6 tests in the   tests   list constructed above.
-    # ------------------------------------------------------------------
-    st.SimpleTestCase.run_tests('practice_problem1a', tests)
+          b2 = Box('Robot Fun', 13)
+          s = b2.double()
+          #   b2.contents is now 'Robot FunRobo'
+          #   b2.volume is still 13
+          #   s is 't Fun'   [this is the part of the doubled contents
+          #                  that did NOT fit in this Box]
 
+          b3 = Box('Robot Fun', 9)
+          s = b3.double()
+          #   b3.contents is now 'Robot Fun'
+          #   b3.volume is still 9
+          #   s is 'Robot Fun'   [this is the part of the doubled
+          #                       contents that did NOT fit]
+        """
+        # --------------------------------------------------------------
+        # TODO: 4. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      5
+        #    TIME ESTIMATE:   3 minutes.
+        # --------------------------------------------------------------
+        ################################################################
+        # FOR FULL CREDIT, YOUR SOLUTION MUST BE NO MORE THAN
+        #    ** TWO **   LINES OF CODE.
+        ################################################################
 
-def practice_problem1a(circles):
-    """
-    What comes in:  A sequence of rg.Circles.
-    What goes out:  Returns the product of the x-coordinates
-      of the centers of the rg.Circles.
-      Returns 1 if the given sequence is empty.
-    Side effects: None.
-    Examples:
-      If the sequence is a list containing these 5 rg.Circles:
-        rg.Circle(rg.Point(5, 10), 20)
-        rg.Circle(rg.Point(2, 20), 20)
-        rg.Circle(rg.Point(7, 30), 10)
-        rg.Circle(rg.Point(10, 40), 20)
-        rg.Circle(rg.Point(2, 50), 10)
-      then this function returns:
-        5 x 2 x 7 x 10 x 2, which is 1400.
-    Type hints:
-      :type sequence: [rg.Circle]
-    """
-    ####################################################################
-    # TODO: 2. Implement and test this function.
-    #     The testing code is already written for you (above).
-    ####################################################################
-    # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-    #    DIFFICULTY:      7
-    #    TIME ESTIMATE:   10 minutes.
-    ####################################################################
+    def shrink(self, new_volume):
+        """
+        What comes in:
+          -- self
+          -- A nonnegative integer that is to be the new volume
+             for this Box
+        What goes out:
+          Returns the portion (if any) of this Box's contents that had to be
+          discarded to make the contents fit within the new volume
+          (or the empty string if this Box's contents fit within
+          the new volume).
+        Side effects:
+          -- Sets this Box's volume to the given new_volume.
+          -- If the new volume is less than the length of this Box's
+             contents, sets this Box's contents to what it was
+             but "clipped" to fit in this Box
+        Examples:
+          b1 = Box('Goodbye', 20)
+          s = b1.shrink(8)
+          #   b1.contents is still 'Goodbye'
+          #   b1.volume is now 8
+          #   s is ''  [since the Box's contents fits even with
+          #             the new volume]
 
+          b2 = Box('Goodbye', 20)
+          s = b2.shrink(4)
+          #   b2.contents is now 'Good'
+          #   b2.volume is now 4
+          #   s is 'bye'  [the portion of the contents that had to be
+          #                discarded to make the contents fit
+          #                within the new volume]
 
-def run_test_practice_problem1b():
-    """ Tests the    practice_problem1b    function. """
-    # ------------------------------------------------------------------
-    # 13 tests.  They use the imported   simple_testing (st)   module.
-    # Each test is a SimpleTestCase with 3 arguments:
-    #   -- the function to test,
-    #   -- a list containing the argument(s) to send to the function,
-    #   -- the correct returned value.
-    # For example, the first test below will call
-    #   practice_problem1b([12, 33, 18, 'hello', 9, 13, 3, 9])
-    # and compare the returned value against True (the correct answer).
-    # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem1b,
-                               [[12, 33, 18, 'hello', 9, 13, 3, 9]],
-                               True),
-             st.SimpleTestCase(practice_problem1b,
-                               [[12, 12, 33, 'hello', 5, 33, 5, 9]],
-                               False),
-             st.SimpleTestCase(practice_problem1b,
-                               [(77, 112, 33, 'hello', 0, 43, 5, 77)],
-                               True),
-             st.SimpleTestCase(practice_problem1b,
-                               [[1, 1, 1, 1, 1, 1, 2]],
-                               False),
-             st.SimpleTestCase(practice_problem1b,
-                               [['aa', 'a']],
-                               False),
-             st.SimpleTestCase(practice_problem1b,
-                               ['aaa'],
-                               True),
-             st.SimpleTestCase(practice_problem1b,
-                               [['aa', 'a', 'b', 'a', 'b', 'a']],
-                               True),
-             st.SimpleTestCase(practice_problem1b,
-                               [[9]],
-                               False),
-             st.SimpleTestCase(practice_problem1b,
-                               [(12, 33, 8, 'hello', 99, 'hello')],
-                               True),
-             st.SimpleTestCase(practice_problem1b,
-                               [['hello there', 'he', 'lo', 'hello']],
-                               False),
-             st.SimpleTestCase(practice_problem1b,
-                               [((8,), '8', (4 + 4, 4 + 4), [8, 8], 7, 8)],
-                               False),
-             st.SimpleTestCase(practice_problem1b,
-                               [[(8,), '8', [4 + 4, 4 + 4],
-                                 (8, 8), 7, [8, 8]]],
-                               True),
-             st.SimpleTestCase(practice_problem1b,
-                               [[(8,), '8', [4 + 4, 4 + 4],
-                                 [8, 8], 7, (8, 8)]],
-                               False),
-             ]
+        Type hints:
+          :type new_volume: int
+        """
+        # --------------------------------------------------------------
+        # TODO: 5. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      8
+        #    TIME ESTIMATE:   12 minutes.
+        #
+        # IMPORTANT: Write a solution to this problem in pseudo-code,
+        # and THEN translate the pseudo-code to a solution.
+        # --------------------------------------------------------------
 
-    # Run the 13 tests in the   tests   list constructed above.
-    st.SimpleTestCase.run_tests('practice_problem1b', tests)
+    def double_then_shrink(self, new_volume):
+        """
+        What comes in:
+          -- self
+          -- A nonnegative integer that is to be the new volume
+             for this Box
+        What goes out:
+          Returns the number of characters that were discarded (see examples)
+        Side effects:
+          -- Calls this Box's   double   method, then
+          -- Calls this Box's   shrink   method, sending it the given new_volume.
+        Examples:
+          b1 = Box('Goodbye', 20)
+          n = b1.double_then_shrink(17)
+          #   b1.contents is now 'GoodbyeGoodbye'
+          #   b1.volume is now 17
+          #   n is 0  [since no characters were discarded during the doubling
+          #            and no characters were discarded during the shrinking]
 
+          b2 = Box('Goodbye', 10)
+          n = b2.double_then_shrink(17)
+          #   b2.contents is now 'GoodbyeGoo'
+          #   b2.volume is now 17
+          #   n is 4  [since 4 characters were discarded during the doubling
+          #            and 0 characters were discarded during the shrinking]
 
-def practice_problem1b(sequence):
-    """
-    What comes in: A non-empty sequence.
-    What goes out: Returns True if the last item of the sequence
-      appears again somewhere else in the sequence.  Returns False
-      if the last item of the sequence does NOT appear somewhere
-      else in the sequence.
-    Side effects: None.
-    Examples:
-      If the sequence is [12, 33, 18, 'hello', 9, 13, 3, 9],
-      this function returns True because the last item (9)
-      DOES appear elsewhere in the sequence (namely, at index 4).
+          b3 = Box('Goodbye', 20)
+          n = b3.double_then_shrink(13)
+          #   b3.contents is now 'GoodbyeGoodby'
+          #   b3.volume is now 13
+          #   n is 1  [since 0 characters were discarded during the doubling
+          #            and 1 character was discarded during the shrinking]
 
-      If the sequence is [12, 12, 33, 'hello', 5, 33, 5, 9],
-      this function returns False because the last item (9)
-      does NOT appear elsewhere in the sequence.
+          b4 = Box('Goodbye', 10)
+          n = b4.double_then_shrink(3)
+          #   b4.contents is now 'Goo'
+          #   b4.volume is now 3
+          #   n is 11  [since 4 characters were discarded during the doubling
+          #             and 7 characters were discarded during the shrinking]
 
-      If the sequence is (77, 112, 33, 'hello', 0, 43, 5, 77),
-      this function returns True because the last item (77)
-      DOES appear elsewhere in the sequence (namely, at index 0).
+        Type hints:
+          :type new_volume: int
+        """
+        # --------------------------------------------------------------
+        # TODO: 6. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      5
+        #    TIME ESTIMATE:   5 minutes.
+        # --------------------------------------------------------------
 
-      If the sequence is [9], this function returns False
-      because the last item (9) does NOT appear elsewhere
-      in the sequence.
+    def reset(self):
+        """
+        What comes in:
+          -- self
+        What goes out: Nothing (i.e., None).
+        Side effects:
+          Changes this Box's contents and volume to whatever they were
+          when this Box was constructed.
+        """
+        # --------------------------------------------------------------
+        # TODO: 7. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      4
+        #    TIME ESTIMATE:   5 minutes.
+        # --------------------------------------------------------------
 
-      If the sequence is [12, 33, 8, 'hello', 99, 'hello'],
-      this function returns True since the last item ('hello')
-      DOES appear elsewhere in the sequence
-      (namely, at indices 3 and 5).
+    def steal(self, other_box):
+        """
+        What comes in:
+          -- self
+          -- Another Box
+        What goes out: Nothing (i.e., None).
+        Side effects:
+          -- 1. Sets this Box's contents to what is was, but with the
+                  other Box's contents appended to this Box's contents
+                  (but clipped as needed to fit within this Box)
+             2. Sets the other Box's contents to whatever this Box
+                  was unable to "steal" (so the empty string if the
+                  other Box's entire contents fit within this Box)
+        Examples:
+          See the TEST cases for examples.
+        Type hints:
+          :type other_box: Box
+        """
+        # --------------------------------------------------------------
+        # TODO: 8. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      7
+        #    TIME ESTIMATE:   5 minutes.
+        # --------------------------------------------------------------
+        ################################################################
+        # FOR FULL CREDIT, YOUR SOLUTION MUST BE NO MORE THAN
+        #    ** TWO **   LINES OF CODE.
+        ################################################################
 
-      If the sequence is ['hello there', 'he', 'lo', 'hello'],
-      this function returns False because the last item ('hello')
-      does NOT appear elsewhere in the sequence.
+    def get_history(self):
+        """
+        What comes in:
+          -- self
+        What goes out:
+          Returns a list that contains the contents of this Box
+          just before each time that the   reset  method is called.
+        Examples:
+          b = Box('Good', 20)
+          h = b.get_history()
+          #   h is now []    since there have been no calls to  reset  yet
 
-      If the sequence is 'hello there',
-      this function returns True since the last item ('e') DOES
-      appear elsewhere in the sequence (namely, at indices 1 and 8).
+          b.double()  # So now b.contents is 'GoodGood'
+          b.shrink(6)  # So now b.contents is 'GoodGo'
+          h = b.get_history()
+          #   h is still []
 
-    Type hints:
-      :type: sequence: list    or tuple or string
-    """
-    ####################################################################
-    # TODO: 3. Implement and test this function.
-    #     The testing code is already written for you (above).
-    #
-    # IMPLEMENTATION REQUIREMENT:  You are NOT allowed to use the
-    #    'count' or 'index' methods for sequences in this problem
-    #    (because here we want you to demonstrate your ability
-    #    to use explicit looping).
-    ####################################################################
-    # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-    #    DIFFICULTY:      5
-    #    TIME ESTIMATE:   8 minutes.
-    ####################################################################
+          b.reset()  # So now b.contents is 'Good' again and its volume is 20 again
+          h = b.get_history()
+          #   h is now ['GoodGo']
 
+          b.append_string('Bye')  # So now b.contents is 'GoodBye'
+          h = b.get_history()
+          #   h is still ['GoodGo']
 
-def run_test_practice_problem1c():
-    """ Tests the    practice_problem1c    function. """
-    # ------------------------------------------------------------------
-    # 4 tests.  They use the imported   simple_testing (st)   module.
-    # Each test is a SimpleTestCase with 3 arguments:
-    #   -- the function to test,
-    #   -- a list containing the argument(s) to send to the function,
-    #   -- the correct returned value.
-    # For example, the first test below will call
-    #   practice_problem1c((9, 0, 8, 0, 0, 4, 4, 0))
-    # and compare the returned value against [1, 3, 4, 7]
-    # (the correct answer).
-    # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem1c,
-                               [(9, 0, 8, 0, 0, 4, 4, 0)],
-                               [1, 3, 4, 7]),
-             st.SimpleTestCase(practice_problem1c,
-                               [(9, 9, 9, 9, 0, 9, 9, 9)],
-                               [4]),
-             st.SimpleTestCase(practice_problem1c,
-                               [(4, 5, 4, 5, 4, 5, 4)],
-                               []),
-             st.SimpleTestCase(practice_problem1c,
-                               [[0, 0, 0]],
-                               [0, 1, 2]),
-             st.SimpleTestCase(practice_problem1c,
-                               [[0, 0]],
-                               [0, 1]),
-             st.SimpleTestCase(practice_problem1c,
-                               [[0, 77]],
-                               [0]),
-             st.SimpleTestCase(practice_problem1c,
-                               [[-40, 0]],
-                               [1]),
-             st.SimpleTestCase(practice_problem1c,
-                               [[-40, 67]],
-                               []),
-             st.SimpleTestCase(practice_problem1c,
-                               [(1, 0, 2, 0, 0, 0, 0, 6, 9, 0, 0, 12)],
-                               [1, 3, 4, 5, 6, 9, 10]),
-             ]
+          b.reset()
+          h = b.get_history()
+          #   h is now ['GoodGo', 'GoodBye']
+        """
+        # --------------------------------------------------------------
+        # TODO: 9. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      6
+        #    TIME ESTIMATE:   5 minutes.
+        # --------------------------------------------------------------
 
-    # Run the tests in the   tests   list constructed above.
-    st.SimpleTestCase.run_tests('practice_problem1c', tests)
-
-
-def practice_problem1c(sequence):
-    """
-    What comes in: A non-empty sequence of integers.
-    What goes out: Returns a list of integers,
-      where the integers are the places (indices)
-      for which the item at that place equals 0.
-    Side effects: None.
-    Examples:
-      Given sequence (9, 0, 8, 0, 0, 4, 4, 0)
-         -- this function returns [1, 3, 4, 7]
-              since 0 appears at indices 1, 3, 4, and 7.
-
-      Given sequence [9, 9, 9, 9, 0, 9, 9, 9]
-         -- this function returns [4]
-              since 0 appears only at index 4.
-
-      Given sequence (4, 5, 4, 5, 4, 5, 4)
-         -- this function returns []
-              since none of the items are 0.
-
-      Given sequence [0, 0, 0]
-         -- this function returns [0, 1, 2]
-              since 0 appears at indices 0, 1 and 2.
-
-    Type hints:
-      :type: sequence: list    or tuple or string
-    """
-    ####################################################################
-    # TODO: 4. Implement and test this function.
-    #     The testing code is already written for you (above).
-    ####################################################################
-    # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-    #    DIFFICULTY:      5
-    #    TIME ESTIMATE:   8 minutes.
-    ####################################################################
-
-
-def run_test_practice_problem1d():
-    """ Tests the    practice_problem1d    function. """
-    # ------------------------------------------------------------------
-    # 4 tests.  They use the imported   simple_testing (st)   module.
-    # Each test is a SimpleTestCase with 3 arguments:
-    #   -- the function to test,
-    #   -- a list containing the argument(s) to send to the function,
-    #   -- the correct returned value.
-    # For example, the first test below will call
-    #   practice_problem1d((9, 0, 8, 0, 0, 4, 4, 0))
-    # and compare the returned value against 1 (the correct answer).
-    # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem1d,
-                               [(9, 0, 8, 0, 0, 4, 4, 0)],
-                               1),
-             st.SimpleTestCase(practice_problem1d,
-                               [(9, 9, 9, 9, 0, 9, 9, 9)],
-                               4),
-             st.SimpleTestCase(practice_problem1d,
-                               [(4, 5, 4, 5, 4, 5, 4)],
-                               - 1),
-             st.SimpleTestCase(practice_problem1d,
-                               [[0, 0, 0]],
-                               0),
-             st.SimpleTestCase(practice_problem1d,
-                               [[0, 0]],
-                               0),
-             st.SimpleTestCase(practice_problem1d,
-                               [[0, 77]],
-                               0),
-             st.SimpleTestCase(practice_problem1d,
-                               [[-40, 0]],
-                               1),
-             st.SimpleTestCase(practice_problem1d,
-                               [[-40, 67]],
-                               - 1),
-             st.SimpleTestCase(practice_problem1d,
-                               [(1, 0, 2, 0, 0, 0, 0, 6, 9, 0, 0, 12)],
-                               1),
-             ]
-
-    # Run the tests in the   tests   list constructed above.
-    st.SimpleTestCase.run_tests('practice_problem1d', tests)
-
-
-def practice_problem1d(sequence):
-    """
-    What comes in: A sequence of integers.
-    What goes out: Returns the first (leftmost) place (index)
-      for which the item at that place equals 0.
-      Returns -1 if the sequence contains no items equal to 0.
-    Side effects: None.
-    Examples:
-      Given sequence (9, 0, 8, 0, 0, 4, 4, 0)
-         -- this function returns 1
-              since 0 first appears at index 1
-
-      Given sequence [9, 9, 9, 9, 0, 9, 9, 9]
-         -- this function returns 4
-              since 0 first appears at index 4
-
-      Given sequence (4, 5, 4, 5, 4, 5, 4)
-         -- this function returns -1
-              since none of the items are 0.
-
-      Given sequence [0, 0, 0]
-         -- this function returns 0
-              since 0 first appears at index 0
-
-    Type hints:
-      :type: sequence: list    or tuple or string
-    """
-    ####################################################################
-    # TODO: 5. Implement and test this function.
-    #     The testing code is already written for you (above).
-    ####################################################################
-    # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-    #    DIFFICULTY:      5
-    #    TIME ESTIMATE:   8 minutes for each part of this problem.
-    ####################################################################
+    def combined_box(self, other_box):
+        """
+        What comes in:
+          -- self
+          -- Another Box
+        What goes out:
+          Returns a new Box whose:
+            -- Contents is the contents of this Box plus (i.e., followed by)
+               the contents of the given other_box
+            -- Volume is the sum of the volumes of this Box and the given other_box
+        Side effects: None.
+        Examples:
+          See the TEST cases for examples.
+        Type hints:
+          :type other_box: Box
+        """
+        # --------------------------------------------------------------
+        # TODO: 10. Implement and test this function.
+        #     The testing code is already written for you (above).
+        # --------------------------------------------------------------
+        # --------------------------------------------------------------
+        # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
+        #    DIFFICULTY:      4
+        #    TIME ESTIMATE:   5 minutes.
+        # --------------------------------------------------------------
 
 
-    ####################################################################
-    # TODO: 6. Just ABOVE this TODO, you should have implemented
-    #     a solution for the   practice_problem1d   function.
-    #     Here, put ANOTHER solution, as follows:
-    #
-    #       -- Your FIRST solution (ABOVE this TODO)
-    #            should be a solution that IGNORES
-    #              practice_problem1c (the previous problem).
-    #
-    #       -- Your SECOND solution (BELOW this TODO)
-    #            should be a solution that USES (calls)
-    #              practice_problem1c.
-    #
-    #          This solution should *** HAVE NO LOOP (no FOR). ***
-    ####################################################################
+########################################################################
+# The TEST functions for the  Box  class begin here.
+########################################################################
+def run_test_init():
+    """ Tests the   __init__   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   __init__   method of the Box class.')
+    print('-----------------------------------------------------------')
+
+    # Test 1:  Contents fit in the Box easily.
+    box = Box('Good morning', 20)
+    expected_contents = 'Good morning'
+    expected_volume = 20
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", box.contents, box.volume)
+    if (expected_contents == box.contents) and (expected_volume == box.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2: Contents barely fit in the Box.
+    box = Box('Good morning', 12)
+    expected_contents = 'Good morning'
+    expected_volume = 12
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", box.contents, box.volume)
+    if (expected_contents == box.contents) and (expected_volume == box.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 3: Contents do not fit in the Box, so are "rejected".
+    box = Box('Good morning', 11)
+    expected_contents = ''
+    expected_volume = 11
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", box.contents, box.volume)
+    if (expected_contents == box.contents) and (expected_volume == box.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
 
 
-def run_test_practice_problem1e():
-    """ Tests the    practice_problem1e    function. """
-    # ------------------------------------------------------------------
-    # 5 tests.  They use the imported   simple_testing (st)   module.
-    # Each test is a SimpleTestCase with 3 arguments:
-    #   -- the function to test,
-    #   -- a list containing the argument(s) to send to the function,
-    #   -- the correct returned value.
-    # For example, the first test below will call
-    #   practice_problem1e((12, 33, 18, 9, 13, 3, 9, 20, 19, 20))
-    # and compare the returned value against 161 (the correct answer).
-    # ------------------------------------------------------------------
-    tests = [st.SimpleTestCase(practice_problem1e,
-                               [(12, 33, 18, 9, 13, 3, 99, 20, 19, 20)], 161),
-             st.SimpleTestCase(practice_problem1e,
-                               [(3, 12, 10, 8, 8, 9, 8, 11)], 29),
-             st.SimpleTestCase(practice_problem1e,
-                               [(-9999999999, 8888888888)], -9999999999),
-             st.SimpleTestCase(practice_problem1e,
-                               [(8888888888, -9999999999)], 8888888888),
-             st.SimpleTestCase(practice_problem1e,
-                               [(-77, 20000, -33, 40000, -55, 60000, -11)], -176),
-             st.SimpleTestCase(practice_problem1e,
-                               [()], 0),
-             st.SimpleTestCase(practice_problem1e,
-                               [[]], 0),
-             st.SimpleTestCase(practice_problem1e,
-                               [[8]], 8),
-             st.SimpleTestCase(practice_problem1e,
-                               [(-77, 8)], -77),
-             st.SimpleTestCase(practice_problem1e,
-                               [(-77, 8, 77)], 0),
-             st.SimpleTestCase(practice_problem1e,
-                               [(-77, 8, 78)], 1),
-             st.SimpleTestCase(practice_problem1e,
-                               [(-77, 8, 78, 100)], 1),
-             ]
+def run_test_append_string():
+    """ Tests the   append_string   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   append_string   method of the Box class.')
+    print('-----------------------------------------------------------')
 
-    # ------------------------------------------------------------------
-    # Run the 5 tests in the   tests   list constructed above.
-    # ------------------------------------------------------------------
-    st.SimpleTestCase.run_tests('practice_problem1e', tests)
+    # Test 1: Appending fits, empty string returned.
+    box = Box('Hello', 20)
+    clipped = box.append_string('Goodbye')
+    #   b1.contents is now 'HelloGoodbye'
+    #   b1.volume is still 20
+    #   s is ''  [since the entire additional_contents
+    #             fit in this Box]
+    expected_contents = 'HelloGoodbye'
+    expected_volume = 20
+    expected_clipped = ''
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2: Appending does NOT fit, clipped portion returned
+    box = Box('Hello', 8)
+    clipped = box.append_string('Goodbye')
+    #   b2.contents is now 'HelloGoo'
+    #   b2.volume is still 8
+    #   s is 'dbye'   [this is the part of the additional_contents
+    #                  that did NOT fit in this Box]
+    expected_contents = 'HelloGoo'
+    expected_volume = 8
+    expected_clipped = 'dbye'
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
 
 
-def practice_problem1e(sequence):
-    """
-    What comes in:
-      A sequence of numbers.
-    What goes out:
-      Returns the sum of the numbers at EVEN INDICES of the sequence.
-    Side effects: None.
-    Examples:
-      If the sequence is:
-          (12, 33, 18, 9, 13, 3, 99, 20, 19, 20)
-      then this function returns
-           12 + 18 + 13 + 99 + 19, which is 161.
-    Type hints:
-      :type sequence: list(float)    or tuple(float)
-    """
-    # ------------------------------------------------------------------
-    # TODO: 7. Implement and test this function.
-    #     The testing code is already written for you (above).
-    ####################################################################
-    # DIFFICULTY AND TIME RATINGS (see top of this file for explanation)
-    #    DIFFICULTY:      5
-    #    TIME ESTIMATE:   8 minutes.
-    ####################################################################
+def run_test_double():
+    """ Tests the   double   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   double   method of the Box class.')
+    print('-----------------------------------------------------------')
 
+    # Test 1: Doubling fits easily, empty string returned.
+    initial_contents = 'Good morning'
+    box = Box(initial_contents, 30)
+    clipped = box.double()
+
+    expected_contents = initial_contents + initial_contents
+    expected_volume = 30
+    expected_clipped = ''
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2: Doubling fits barely, empty string returned.
+    initial_contents = 'Good morning'
+    box = Box(initial_contents, 24)
+    clipped = box.double()
+
+    expected_contents = initial_contents + initial_contents
+    expected_volume = 24
+    expected_clipped = ''
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 3: Doubling almost fits, one-character string returned.
+    initial_contents = 'Good morning'
+    box = Box(initial_contents, 23)
+    clipped = box.double()
+
+    expected_contents = initial_contents + 'Good mornin'
+    expected_volume = 23
+    expected_clipped = 'g'
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 4: Doubling does not fit, multiple-character string returned.
+    initial_contents = 'Good morning'
+    box = Box(initial_contents, 20)
+    clipped = box.double()
+
+    expected_contents = initial_contents + 'Good mor'
+    expected_volume = 20
+    expected_clipped = 'ning'
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 5: mutiple doubles
+    initial_contents = 'Good morning'
+    expected_contents = initial_contents * 4
+    expected_volume = 100
+    box = Box(initial_contents, expected_volume)
+    box.double()
+    box.double()
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", box.contents, box.volume)
+    if (expected_contents == box.contents) and (expected_volume == box.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def run_test_shrink():
+    """ Tests the   shrink   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   shrink   method of the Box class.')
+    print('-----------------------------------------------------------')
+
+    # Test 1:  Volume is small, shrinking occurs
+    initial_contents = 'Good morning'
+    initial_volume = 20
+    box = Box(initial_contents, initial_volume)
+    clipped = box.shrink(4)
+
+    expected_contents = 'Good'
+    expected_volume = 4
+    expected_clipped = ' morning'
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2:  Volume is big, no shrinking.
+    initial_contents = 'Good morning'
+    initial_volume = 30
+    box = Box(initial_contents, initial_volume)
+    clipped = box.shrink(15)
+
+    expected_contents = initial_contents
+    expected_volume = 15
+    expected_clipped = ''
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def run_test_double_then_shrink():
+    """ Tests the   double_then_shrink   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   double_then_shrink   method of the Box class.')
+    print('-----------------------------------------------------------')
+
+    # Test 1: No clipping
+    box = Box('Goodbye', 20)
+    number_clipped = box.double_then_shrink(17)
+    #   box.contents is now 'GoodbyeGoodbye'
+    #   box.volume is now 17
+    #   n is 0  [since no characters were discarded during the doubling
+    #            and no characters were discarded during the shrinking]
+    expected_contents = 'GoodbyeGoodbye'
+    expected_volume = 17
+    expected_clipped = 0
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, number_clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == number_clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2: Clipping from doubling
+    box = Box('Goodbye', 10)
+    number_clipped = box.double_then_shrink(17)
+    #   box.contents is now 'GoodbyeGoo'
+    #   box.volume is now 17
+    #   n is 4  [since 4 characters were discarded during the doubling
+    #            and 0 characters were discarded during the shrinking]
+    expected_contents = 'GoodbyeGoo'
+    expected_volume = 17
+    expected_clipped = 4
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, number_clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == number_clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 3: Clipping from shrinking
+    box = Box('Goodbye', 20)
+    number_clipped = box.double_then_shrink(13)
+    #   box.contents is now 'GoodbyeGoodby'
+    #   box.volume is now 13
+    #   n is 1  [since 0 characters were discarded during the doubling
+    #            and 1 character was discarded during the shrinking]
+    expected_contents = 'GoodbyeGoodby'
+    expected_volume = 13
+    expected_clipped = 1
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, number_clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == number_clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 4: Clipping from doubling and shrinking
+    box = Box('Goodbye', 10)
+    number_clipped = box.double_then_shrink(3)
+    #   box.contents is now 'Goo'
+    #   box.volume is now 3
+    #   n is 11  [since 4 characters were discarded during the doubling
+    #             and 7 characters were discarded during the shrinking]
+    expected_contents = 'Goo'
+    expected_volume = 3
+    expected_clipped = 11
+    print("Expected:", expected_contents, expected_volume, expected_clipped)
+    print("Actual:  ", box.contents, box.volume, number_clipped)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_clipped == number_clipped)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def run_test_reset():
+    """ Tests the   reset   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   reset   method of the Box class.')
+    print('-----------------------------------------------------------')
+
+    # Test 1: Reset to contents that fit in original volume
+    initial_contents = 'Good morning'
+    initial_volume = 100
+
+    expected_contents = initial_contents
+    expected_volume = initial_volume
+
+    box = Box(initial_contents, initial_volume)
+    box.double()
+    box.double_then_shrink(2)
+    box.reset()
+
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", box.contents, box.volume)
+    if (expected_contents == box.contents) and (expected_volume == box.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2: Reset to contents that did not fit in original volume
+    initial_contents = 'Good morning'
+    initial_volume = 5
+
+    expected_contents = ''
+    expected_volume = initial_volume
+
+    box = Box(initial_contents, initial_volume)
+    box.double()
+    box.double_then_shrink(2)
+    box.reset()
+
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", box.contents, box.volume)
+    if (expected_contents == box.contents) and (expected_volume == box.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def run_test_steal():
+    """ Tests the   steal   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   steal   method of the Box class.')
+    print('-----------------------------------------------------------')
+
+    # Test 1:  Box 1 steals from 2, where Box 1 has room for all of Box 2's
+    # content
+    initial_contents_1 = 'Good morning'
+    initial_volume_1 = 100
+    initial_contents_2 = 'Hello'
+    initial_volume_2 = 10
+    box1 = Box(initial_contents_1, initial_volume_1)
+    box2 = Box(initial_contents_2, initial_volume_2)
+    box1.steal(box2)
+
+    expected_contents_1 = initial_contents_1 + initial_contents_2
+    expected_volume_1 = initial_volume_1
+    expected_contents_2 = ''
+    expected_volume_2 = initial_volume_2
+    print("Expected 1:", expected_contents_1, expected_volume_1)
+    print("Actual   1:", box1.contents, box1.volume)
+
+    print("\nExpected 2:", expected_contents_2, expected_volume_2)
+    print("Actual   2:", box2.contents, box2.volume)
+    if (expected_contents_1 == box1.contents) and \
+            (expected_volume_1 == box1.volume) \
+            and (expected_contents_2 == box2.contents) \
+            and (expected_volume_2 == box2.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test 2:  Box 1 steals from 2, where Box 1 does NOT have room
+    #          for all of Box 2's content
+    initial_contents_1 = 'Good morning'
+    initial_volume_1 = 15
+    initial_contents_2 = 'Hello'
+    initial_volume_2 = 10
+
+    expected_contents_1 = initial_contents_1 + 'Hel'
+    expected_volume_1 = initial_volume_1
+
+    expected_contents_2 = 'lo'
+    expected_volume_2 = initial_volume_2
+
+    box1 = Box(initial_contents_1, initial_volume_1)
+    box2 = Box(initial_contents_2, initial_volume_2)
+    box1.steal(box2)
+
+    print("Expected 1:", expected_contents_1, expected_volume_1)
+    print("Actual   1:", box1.contents, box1.volume)
+
+    print("\nExpected 2:", expected_contents_2, expected_volume_2)
+    print("Actual   2:", box2.contents, box2.volume)
+    if (expected_contents_1 == box1.contents) \
+            and (expected_volume_1 == box1.volume) \
+            and (expected_contents_2 == box2.contents) \
+            and (expected_volume_2 == box2.volume):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def run_test_get_history():
+    """ Tests the   get_history   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   get_history   method of the Box class.')
+    print('-----------------------------------------------------------')
+
+    # Step 1 of the test:
+    box = Box('Good', 20)
+    h = box.get_history()
+    #   h is now []    since there have been no calls to  reset  yet
+    expected_contents = 'Good'
+    expected_volume = 20
+    expected_h = []
+    print("Expected:", expected_contents, expected_volume, expected_h)
+    print("Actual:  ", box.contents, box.volume, h)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_h == h)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Step 2 of the test:
+    box.double()  # So now box.contents is 'GoodGood'
+    box.shrink(6)  # So now box.contents is 'GoodGo'
+    h = box.get_history()
+    #   h is still []
+    expected_contents = 'GoodGo'
+    expected_volume = 6
+    expected_h = []
+    print("Expected:", expected_contents, expected_volume, expected_h)
+    print("Actual:  ", box.contents, box.volume, h)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_h == h)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Step 3 of the test:
+    # So now box.contents is 'Good' again and box.volume is 20 again
+    box.reset()
+    h = box.get_history()
+    #   h is now ['GoodGo']
+    expected_contents = 'Good'
+    expected_volume = 20
+    expected_h = ['GoodGo']
+    print("Expected:", expected_contents, expected_volume, expected_h)
+    print("Actual:  ", box.contents, box.volume, h)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_h == h)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Step 4 of the test:
+    box.append_string('Bye')  # So now box.contents is 'GoodBye'
+    h = box.get_history()
+    #   h is still ['GoodGo']
+    expected_contents = 'GoodBye'
+    expected_volume = 20
+    expected_h = ['GoodGo']
+    print("Expected:", expected_contents, expected_volume, expected_h)
+    print("Actual:  ", box.contents, box.volume, h)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_h == h)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Step 5 of the test:
+    box.reset()
+    h = box.get_history()
+    #   h is now ['GoodGo', 'GoodBye']
+    expected_contents = 'Good'
+    expected_volume = 20
+    expected_h = ['GoodGo', 'GoodBye']
+    print("Expected:", expected_contents, expected_volume, expected_h)
+    print("Actual:  ", box.contents, box.volume, h)
+    if ((expected_contents == box.contents) and
+            (expected_volume == box.volume) and
+            (expected_h == h)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def run_test_combined_box():
+    """ Tests the   combined_box   method of the Box class. """
+    print()
+    print('-----------------------------------------------------------')
+    print('Testing the   combined_box   method of the Box class.')
+    print('-----------------------------------------------------------')
+    b1 = Box('Roses', 8)
+    b2 = Box('Violets', 20)
+    b1.double()  # So now 'RosesRos' with volume 8
+    b2.shrink(5)  # So now 'Viole' with volume 5
+
+    new_box1 = b1.combined_box(b2)
+    new_box2 = b2.combined_box(b1)
+
+    # Test results for new_box1:
+    expected_contents = 'RosesRosViole'
+    expected_volume = 13
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", new_box1.contents, new_box1.volume)
+    if ((expected_contents == new_box1.contents) and
+            (expected_volume == new_box1.volume)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+    # Test results for new_box2:
+    expected_contents = 'VioleRosesRos'
+    expected_volume = 13
+    print("Expected:", expected_contents, expected_volume)
+    print("Actual:  ", new_box2.contents, new_box2.volume)
+    if ((expected_contents == new_box2.contents) and
+            (expected_volume == new_box2.volume)):
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+    print()
+
+
+def print_failure_message(message='  *** FAILED the above test. ***',
+                          flush_time=1.0):
+    """ Prints a message onto stderr, hence in RED. """
+    time.sleep(flush_time)
+    print(message,
+          file=sys.stderr, flush=True)
+    time.sleep(flush_time)
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
