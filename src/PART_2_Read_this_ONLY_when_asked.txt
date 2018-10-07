@@ -11,8 +11,7 @@ Here (below) is a SOLUTION to the  APPEND_STRING   method of practice_problem1.
         # can be appended to this Box's contents:
         
         space = self.volume - len(self.contents)
-        number_of_characters_to_append = min(space,
-                                             len(additional_contents))
+        number_of_characters_to_append = min(space, len(additional_contents))
 
         # Build up a string that is the characters to append
         # (that is, those that will fit into this Box).
